@@ -1227,7 +1227,7 @@ function saveFileScheme() {
             html += '<div class="form-group">';
             html += '<label for="loadFile">Выберите файл проекта</label>';
             html += '<input type="file" id="loadFile" name="loadFile" />';
-            html += '<div id="importDataBlockWrp"></div>';
+            html += '<div id="importDataBlock"></div>';
             html += '<div id="dataFileBlock"></div>';
             html += '</div>';
             customModal(html);
@@ -1239,7 +1239,7 @@ function saveFileScheme() {
                 let reader = new FileReader();    
                 reader.onload = function(theFile) {
                     dataFileBlock.innerHTML = theFile.target.result;
-                    document.getElementById('importDataBlock').innerHTML = '<span id="importDataBlock" class="btn btn-primary mt1" onclick="importDataInFile()">Импортировать проект</span>';
+                    document.getElementById('importDataBlock').innerHTML = '<span id="importData" class="btn btn-primary mt1" onclick="importDataInFile()">Импортировать проект</span>';
                 }
                 reader.readAsText(file);
             }); 
