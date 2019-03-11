@@ -371,17 +371,17 @@
                 schemaObj.templates[rowId] = prepareTemplate(templateObj[elementSelect]);
                 schemaObj.resistance[rowId] = Object.assign({}, resistanceObj[elementSelect]);
                 html += "<tr id='row" + rowId + "'>";
-                html += "	<td id='elementSelect" + rowId + "'>";
-                html += "		<div class='form-inline'>";
-                html += "			<div class='form-group'><label>" + rowId + "</label>&nbsp;";
-                html += "				<input id='elementSelectVal" + rowId + "' class='form-control select' type='text' name='elementSelectVal[" + rowId + "]' onchange='changeElementTitleValue(this.id," + rowId + ")' value='" + elementObj[elementSelect].name + "'>";
-                html += "			</div>";
-                html += "		</div>";
-                html += "	</td>";
-                html += "	<td id='elementScheme" + rowId + "' class='elementScheme'>" + renderItemScheme(elementSelect, rowId) + "</td>";
-                html += "	<td id='elementData" + rowId + "' class='elementData'>" + renderTemplateItemData(elementSelect, rowId) + "</td>";
-                html += "	<td id='pointKz" + rowId + "' class='elementPointKz'>" + renderItemPointKz(elementSelect, rowId) + "</td>";
-                html += "	<td><input type='button' value='Удалить' class='delete btn btn-danger' onclick='deleteRow(" + rowId + ")'></td>";
+                html += "   <td id='elementSelect" + rowId + "'>";
+                html += "       <div class='form-inline'>";
+                html += "           <div class='form-group'><label>" + rowId + "</label>&nbsp;";
+                html += "               <input id='elementSelectVal" + rowId + "' class='form-control select' type='text' name='elementSelectVal[" + rowId + "]' onchange='changeElementTitleValue(this.id," + rowId + ")' value='" + elementObj[elementSelect].name + "'>";
+                html += "           </div>";
+                html += "       </div>";
+                html += "   </td>";
+                html += "   <td id='elementScheme" + rowId + "' class='elementScheme'>" + renderItemScheme(elementSelect, rowId) + "</td>";
+                html += "   <td id='elementData" + rowId + "' class='elementData'>" + renderTemplateItemData(elementSelect, rowId) + "</td>";
+                html += "   <td id='pointKz" + rowId + "' class='elementPointKz'>" + renderItemPointKz(elementSelect, rowId) + "</td>";
+                html += "   <td><input type='button' value='Удалить' class='delete btn btn-danger' onclick='deleteRow(" + rowId + ")'></td>";
                 html += "</tr>";
                 let row = table.insertRow(rowId).outerHTML = html;
             } else {
@@ -1227,7 +1227,7 @@ function saveFileScheme() {
             html += '<div class="form-group">';
             html += '<label for="loadFile">Выберите файл проекта</label>';
             html += '<input type="file" id="loadFile" name="loadFile" />';
-            html += '<div id="importDataBlock"></div>';
+            html += '<div id="importDataBlockWrp"></div>';
             html += '<div id="dataFileBlock"></div>';
             html += '</div>';
             customModal(html);
@@ -1239,7 +1239,7 @@ function saveFileScheme() {
                 let reader = new FileReader();    
                 reader.onload = function(theFile) {
                     dataFileBlock.innerHTML = theFile.target.result;
-                    document.getElementById('importDataBlock').innerHTML = '<span id="importDataBlock" class="btn btn-primary" onclick="importDataInFile()">Импортировать проект</span>';
+                    document.getElementById('importDataBlock').innerHTML = '<span id="importDataBlock" class="btn btn-primary mt1" onclick="importDataInFile()">Импортировать проект</span>';
                 }
                 reader.readAsText(file);
             }); 
@@ -1587,6 +1587,10 @@ function saveFileScheme() {
 
     .mb1 {
         margin-bottom: 15px;
+    }
+
+    .mt1 {
+        margin-top: 15px;
     }
 
     .img-responsive svg {
