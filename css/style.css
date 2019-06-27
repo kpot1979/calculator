@@ -1,5 +1,5 @@
     body {
-        margin-top: 50px;
+        padding-top: 70px;
     }
 
     #projectResult {
@@ -176,5 +176,13 @@
 
     #projectResult .sdImage .resistanceData, #projectResult .adImage .resistanceData {
         padding-top: 25px;
+    }
+
+    footer {
+        position: relative;
+        min-height: 50px;
+        border-top: 1px solid #e7e7e7;
+        border-bottom: 1px solid #e7e7e7;
+        background-color: #f8f8f8;
     }
 
