@@ -273,5 +273,5 @@
   }
 }
 #tableKz {
-    min-width: 1145px;
+    min-width: 1145px !Important;
 }
