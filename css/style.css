@@ -260,8 +260,8 @@
 }
 .expanded .navbar-menu {
     display: block;
-    float: none !Important;
-    padding-top: 5rem;
+    width: 100%;
+    float: left !Important;
     text-align: center;
 }
 .expanded .navbar-menu ul li {
@@ -271,4 +271,7 @@
   .navbar-menu {
     display: block;
   }
+}
+#tableKz {
+    min-width: 1145px;
 }
