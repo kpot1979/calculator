@@ -6,105 +6,111 @@
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="css/bootstrap.css" type="text/css"/>
+    <script type="text/javascript" src="jquery-3.4.1.js"></script>
     <meta name="author" content="Андрюхин Сергей">
     <title>1111111111</title>
+    <style type="text/css">
+        body {
+            text-align: center;
+            background: #000;
+        }
+        #canvas {
+
+        }
+    </style>
     <script type="text/javascript">
-
-
-
-
-function randomInteger(min, max) {
-    var rand = min - 0.5 + Math.random() * (max - min + 1)
-    rand = Math.round(rand);
-    return rand;
-  } 
-
-function getRandomColor() {
-  var letters = '0123456789ABCDEF';
-  var color = '#';
-  for (var i = 0; i < 6; i++) {
-    color += letters[randomInteger(0, 15)];
-  }
-  return color;
-}
-function getQuantity(w, h, width, height) {
-    var quantW, quantH, arr =[], addElW, addElH, resW, resH;
-    var divisionW = width/w;
-    var divisionH = height/h;
-
-    if (width % w !== 0) {   
-        quantW = parseInt(divisionW, 10);
-        addElW = 1;
-    } else {
-        quantW = width/w; 
-        addElW = 0;    
-    }
-
-    if (height % h !== 0) {      
-        quantH = parseInt(divisionH, 10);
-        addElH = 1;
-    } else {
-        quantH = height/h; 
-        addElH = 0;    
-    }
-var ctx = canvas.getContext("2d");
-    for (let i = 0, offsetH = 0; i < quantH + addElH; i++, offsetH = offsetH + h) {
-        if(i < quantH) {
-            resH = h;     
-        } else {
-            resH = height - (h * quantH);
-        }
-        for (let j = 0, offsetW = 0; j < quantW + addElW; j++, offsetW = offsetW + w) {
-            if(j < quantW) {
-                resW = w;    
-            } else {
-                resW = width - (w * quantW);
-            }
-            // ctx.fillStyle = getRandomColor();
-            ctx.strokeRect (resW, resH, offsetW, offsetH);
-            console.log(resW +';'+ resH +';'+ offsetW +';'+ offsetH);
-        }
-    }
-    console.log(height);
-    console.log(divisionH);
-    console.log(arr);
-  return arr;
-}
-        window.onload = function () {
         var body = document.getElementById('body');
-        var canvas = document.getElementById('canvas');
-        var height = document.documentElement.clientHeight;
-        var width = document.documentElement.clientWidth;
-        var scrinSquare = height*width;
-        var i = 100;
-        var divHeight = height/i;
-        var divWidth = width/i;
-        var w, h, color;
-        var string = '';
 
-        canvas.setAttribute('width', width);
-        canvas.setAttribute('height', height);
+        function randomInteger(min, max) {
+            var rand = min - 0.5 + Math.random() * (max - min + 1)
+            rand = Math.round(rand);
+            return rand;
+          } 
 
-        if (canvas.getContext) {
-        var ctx = canvas.getContext("2d");
-
-getQuantity(100, 100, width, height);
-        // ctx.fillStyle = getRandomColor();
-        // ctx.fillRect (10, 10, 50, 50);
-
-        // ctx.fillStyle = getRandomColor();
-        // ctx.fillRect (60, 60, 50, 50);
-        }        
-        // for (let j = 0, p = scrinSquare/Math.pow(i,2); j < p; j++) {
-        //     color = colorArr[randomInteger(0, 19)];
-        //     string += '<div style="float:left;width:'+i+'px;height:'+i+'px;background:'+getRandomColor()+';"></div>';
-        // }
-
-        //body.innerHTML = string;
+        function getRandomColor() {
+          var letters = '0123456789ABCDEF';
+          var color = '#';
+          for (var i = 0; i < 6; i++) {
+            color += letters[randomInteger(0, 15)];
+          }
+          return color;
         }
+
+        function getQuantity(w, h, width, height) {
+            var quantW, quantH, arr =[], addElW, addElH, resW, resH;
+            var divisionW = width/w;
+            var divisionH = height/h;
+
+            if (width % w !== 0) {   
+                quantW = parseInt(divisionW, 10);
+                addElW = 1;
+            } else {
+                quantW = width/w; 
+                addElW = 0;    
+            }
+
+            if (height % h !== 0) {      
+                quantH = parseInt(divisionH, 10);
+                addElH = 1;
+            } else {
+                quantH = height/h; 
+                addElH = 0;    
+            }
+            var offsetH = 0, offsetW;
+            for (let i = 0; i < quantH + addElH; i++, offsetH = offsetH + h) {
+                if(i < quantH) {
+                    resH = h;     
+                } else {
+                    resH = height - (h * quantH);
+                }
+                offsetW = 0;
+                for (let j = 0; j < quantW + addElW; j++, offsetW = offsetW + w) {
+                    if(j < quantW) {
+                        resW = w;    
+                    } else {
+                        resW = width - (w * quantW);
+                    }
+                   arr.push(offsetW +';'+ offsetH +';'+resW +';'+ resH);
+                }
+            }
+          return arr;
+        }
+
+window.onload = function () {
+    var canvas = document.getElementById('canvas');
+    var height = canvas.clientHeight;  
+    var width = canvas.clientWidth
+    var w, h, color, arr;
+    var string = '';
+    //canvas.setAttribute('width', width);
+    //canvas.setAttribute('height', height);
+
+    if (canvas.getContext) {
+    var ctx = canvas.getContext("2d");
+
+    arr = getQuantity(100, 100, width, height);
+
+    arr.forEach(function(item, i, arr) {
+        var prm = item.split(';');
+        ctx.fillStyle = getRandomColor();
+        ctx.fillRect (prm[0], prm[1], prm[2], prm[3]);
+    });
+    console.log(arr);
+    // ctx.fillStyle = getRandomColor();
+    // ctx.fillRect (0, 0, 50, 50);
+    }        
+}
+
+
+$( document ).ready(function() {
+        //console.log($('body').width());
+        // console.log($('body').outerWidth());
+        //console.log($('body').outerWidth(true));
+        // console.log($('body').innerWidth());
+});
     </script>
 </head>
 <body id="body">
-<canvas id="canvas"></canvas>
+<canvas id="canvas" width="1900" height="1000"></canvas>
 </body>
 </html>
