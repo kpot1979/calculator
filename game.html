@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Gamedev Canvas Workshop - lesson 10: finishing up</title>
+    <style>* { padding: 0; margin: 0; } canvas { background: #e6e6ff; display: block; margin: 0 auto; }</style>
+</head>
+<body>
+
+<canvas id="myCanvas" width="1600" height="900"></canvas>
+
+<script>
+    var canvas = document.getElementById("myCanvas");
+    var ctx = canvas.getContext("2d");
+    var ballRadius = 10;
+    var x = canvas.width/2;
+    var y = canvas.height;
+    var dx = 6;
+    var dy = -6;
+    var dg = 2;
+    var paddleHeight = 5;
+    var paddleWidth = 50;
+    var paddleX = (canvas.width-paddleWidth)/2;
+    var rightPressed = false;
+    var leftPressed = false;
+    var brickRowCount = 5;
+    var brickColumnCount = 3;
+    var brickWidth = 75;
+    var brickHeight = 20;
+    var brickPadding = 10;
+    var brickOffsetTop = 30;
+    var brickOffsetLeft = 30;
+    var score = 0;
+    var lives = 3;
+    var relativeX = 0;
+    var relX = 0;
+    var LineX = canvas.width/2;
+    var seaBackground = 70; //%
+    var skyBackgroundHeight = canvas.height - (canvas.height * seaBackground/100); //%
+    var seaBackgroundHeight = canvas.height - skyBackgroundHeight;
+    var fire = false;
+    var k = 0.2;  
+
+    document.addEventListener("keydown", keyDownHandler, false);
+    document.addEventListener("keyup", keyUpHandler, false);
+    document.addEventListener("mousemove", mouseMoveHandler, false);
+    document.addEventListener("click", mouseClickHandler, false);
+    
+
+    function randomInteger(min, max) {
+        var rand = Math.floor(Math.random() * (max - min + 1)) + min;
+        return rand;
+      } 
+    function keyDownHandler(e) {
+        if(e.keyCode == 39) {
+            rightPressed = true;
+        }
+        else if(e.keyCode == 37) {
+            leftPressed = true;
+        }
+    }
+    function keyUpHandler(e) {
+        if(e.keyCode == 39) {
+            rightPressed = false;
+        }
+        else if(e.keyCode == 37) {
+            leftPressed = false;
+        }
+    }
+    function mouseMoveHandler(e) {
+        relativeX = e.clientX - canvas.offsetLeft;
+        if(relativeX > 0 && relativeX < canvas.width) {
+            paddleX = relativeX - paddleWidth/2;
+        }
+        if(relativeX < 0) {
+            relX = 0;
+            LineX = 0;
+        } else if (relativeX > 0 && relativeX < canvas.width) {
+            relX = relativeX * 180/canvas.width;
+            LineX = relativeX;
+        } else if (relativeX > canvas.width) {
+            relX = 180;
+            LineX = canvas.width;
+        }
+    }
+    function mouseClickHandler(e) {
+        fire = true;
+        x = canvas.width/2;
+        alphaDegConst = 
+
+    }
+
+    function drawBackground() {
+        ctx.beginPath();
+        var gradient = ctx.createLinearGradient(0, skyBackgroundHeight, 0, canvas.height);
+        gradient.addColorStop(0, "#0000e6");
+        gradient.addColorStop(1, "#000");
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, skyBackgroundHeight, canvas.width, canvas.height);
+        ctx.closePath();
+    }
+    function drawBullet() {
+        ctx.beginPath();
+        ctx.arc(x, y, ballRadius, 0, Math.PI*2);
+        ctx.fillStyle = "#0095DD";
+        ctx.fill();
+        ctx.closePath();
+    }
+    function drawPaddle() {
+        ctx.beginPath();
+        paddleX = paddleX;
+        ctx.rect(paddleX, canvas.height-paddleHeight, paddleWidth, paddleHeight);
+        ctx.fillStyle = "red";
+        ctx.fill();
+        ctx.closePath();
+    }
+    function drawText(text, textX, textY) {
+        ctx.beginPath();
+        ctx.font = '48px serif';
+        ctx.fillStyle = "#000";
+        ctx.fillText(text, textX, textY);
+        ctx.fill();
+        ctx.closePath();
+    }
+    function drawLine() {
+        ctx.beginPath();
+        ctx.moveTo(canvas.width/2,canvas.height);
+        var lineX = LineX;
+        ctx.lineTo(lineX, skyBackgroundHeight);
+        //ctx.setLineDash([5, 15]);
+        ctx.lineWidth = 1;
+        ctx.strokeStyle  = "#ccccff";
+        ctx.closePath();
+        ctx.stroke();
+    }
+
+
+    function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        drawBackground();
+        drawPaddle();
+        drawLine();
+        //if (canvas.width/2 <= LineX) {
+            var h = Math.abs(canvas.width/2 - LineX);
+            var gipotenusa = Math.sqrt(Math.pow(h, 2) + Math.pow(seaBackgroundHeight, 2));
+            var alpha = Math.atan(h/seaBackgroundHeight);
+            var alphaDeg = alpha * 180 / Math.PI;
+
+        //}
+        drawText(dg, 10, 50);
+        drawText(alphaDeg, 10, 100);
+        drawText(gipotenusa, 10, 150);
+        if (fire === true) { 
+            console.log(fire);
+            drawBullet();
+            dg = dg + 2;
+            x = canvas.width/2 - (dg * Math.sin(alphaDeg));
+            y = canvas.height - (dg * Math.cos(alphaDeg));
+        }
+
+        if (y < skyBackgroundHeight+ballRadius) {
+            x = canvas.width/2;
+            y = canvas.height; 
+            fire = false; 
+        }
+        requestAnimationFrame(draw);
+    }
+//var game = setInterval(draw, 500);
+    draw();
+</script>
+
+</body>
+</html>
